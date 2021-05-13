@@ -6,8 +6,7 @@ import classNames from 'classnames/bind';
 
 export default function InterviewerListItem(props) {
 
-  let interviewerClass = classNames ( {
-    "interviewers__item": true,
+  let interviewerClass = classNames ( "interviewers__item", {
     "interviewers__item--selected": props.selected,
   });
 
