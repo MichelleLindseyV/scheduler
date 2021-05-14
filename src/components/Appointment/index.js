@@ -8,7 +8,7 @@ import Empty from "components/Appointment/Empty";
 
 export default function Appointment(props) {
 
-  
+  console.log(props);
 
   
 
