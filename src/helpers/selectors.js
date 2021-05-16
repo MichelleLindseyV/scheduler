@@ -1,6 +1,6 @@
 
 
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
   
   let appointmentArr = [];
   let daysAppointments = [];
