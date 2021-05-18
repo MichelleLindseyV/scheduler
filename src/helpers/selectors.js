@@ -1,18 +1,18 @@
 
 //Get appointments helper function:
 export const getAppointmentsForDay = (state, day) => {
-  let appointmentArr = [];
+  let interviewerArr = [];
   let daysAppointments = [];
   for (let i = 0; i < state.days.length; i++) {
     if (state.days[i].name === day) {
-      appointmentArr = state.days[i].appointments;
+      interviewerArr = state.days[i].appointments;
     }
   }
-  for (let j = 0; j < appointmentArr.length; j++) {
+  for (let j = 0; j < interviewerArr.length; j++) {
     for (const prop in state.appointments) {
       let appointmentId = state.appointments[prop].id;
 
-      if (appointmentArr[j] === appointmentId) {
+      if (interviewerArr[j] === appointmentId) {
         daysAppointments.push(state.appointments[prop]);
       }
     }
@@ -46,6 +46,29 @@ export const getInterview = (state, interview) => {
     }
   }
   return null;
+};
+
+
+//Get interviewers for day helper function:
+export const getInterviewersForDay = (state, day) => {
+  let interviewerArr = [];
+  let daysAppointments = [];
+  for (let i = 0; i < state.days.length; i++) {
+    if (state.days[i].name === day) {
+      interviewerArr = state.days[i].interviewers;
+    }
+  }
+  
+  for (let j = 0; j < interviewerArr.length; j++) {
+
+    for (const val in state.interviewers) {
+      let schedInterviewer = state.interviewers[val].id;
+      if (interviewerArr[j] === schedInterviewer) {
+        daysAppointments.push(state.interviewers[val]);
+      }
+    }
+  }
+  return daysAppointments;
 };
 
 
