@@ -23,7 +23,6 @@ export const getAppointmentsForDay = (state, day) => {
 
 //Get interviewer helper function:
 export const getInterview = (state, interview) => {
-  console.log(interview);
   for (let interviewerId in interview) {
     let assignedInterviewer = interview[interviewerId];
 
@@ -68,7 +67,6 @@ export const getInterviewersForDay = (state, day) => {
       }
     }
   }
-  console.log(daysInterviewers)
   return daysInterviewers;
 };
 

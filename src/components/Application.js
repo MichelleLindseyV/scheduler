@@ -20,12 +20,13 @@ export default function Application(props) {
   });
 
   const appointments = getAppointmentsForDay(state, state.day);
-  let interviewers = getInterviewersForDay(state, state.day);
-
+  const interviewers = getInterviewersForDay(state, state.day);
   
-  
-
   const setDay = day => setState({ ...state, day });
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  };
 
 
   useEffect(() => {
@@ -68,9 +69,8 @@ export default function Application(props) {
       <section className="schedule">
         {
         appointments.map((appointment) => {
-          console.log("appointment:", appointment);
           const interview = getInterview(state, appointment.interview);
-          console.log(interview)
+
           return (
           <Appointment
           key={appointment.id}
@@ -78,6 +78,7 @@ export default function Application(props) {
           time={appointment.time}
           interview={interview}
           interviewers={interviewers}
+          bookInterview={bookInterview}
           // student={appointment.interview && appointment.interview.student}
           // interviewer={appointment.interview && appointment.interview.interviewer && appointment.interview.interviewer.name}
           />
