@@ -23,6 +23,7 @@ export const getAppointmentsForDay = (state, day) => {
 
 //Get interviewer helper function:
 export const getInterview = (state, interview) => {
+  console.log(interview);
   for (let interviewerId in interview) {
     let assignedInterviewer = interview[interviewerId];
 
@@ -52,23 +53,23 @@ export const getInterview = (state, interview) => {
 //Get interviewers for day helper function:
 export const getInterviewersForDay = (state, day) => {
   let interviewerArr = [];
-  let daysAppointments = [];
+  let daysInterviewers = [];
   for (let i = 0; i < state.days.length; i++) {
-    if (state.days[i].name === day) {
+    if (state.days[i].name == day) {
       interviewerArr = state.days[i].interviewers;
     }
   }
-  
   for (let j = 0; j < interviewerArr.length; j++) {
 
     for (const val in state.interviewers) {
       let schedInterviewer = state.interviewers[val].id;
       if (interviewerArr[j] === schedInterviewer) {
-        daysAppointments.push(state.interviewers[val]);
+        daysInterviewers.push(state.interviewers[val]);
       }
     }
   }
-  return daysAppointments;
+  console.log(daysInterviewers)
+  return daysInterviewers;
 };
 
 
