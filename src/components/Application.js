@@ -7,6 +7,7 @@ import DayList from "components/DayList";
 import "components/Appointment";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import { render } from "@testing-library/react";
 
 
 
@@ -26,7 +27,7 @@ export default function Application(props) {
 
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    console.log("book interview:", id, interview);
 
     const appointment = {
       ...state.appointments[id],
@@ -38,13 +39,17 @@ export default function Application(props) {
       [id]: appointment
     };
     
-    setState({
-      ...state,
-      appointments
-    });
+    return axios.put(`/api/appointments/${id}`, {interview})
+    .then((response) => {
+      setState({
+        ...state,
+        appointments
+      });
+      return Promise.resolve()
+    })
   };
 
-  
+
 
   useEffect(() => {
     Promise.all([
