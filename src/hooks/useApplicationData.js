@@ -29,7 +29,6 @@ export default function useApplicationData() {
 const updateSpots = function(appointmentId, days, appointments) {
 
   const dayObj = days.find(day => day.appointments.includes(appointmentId))
-  // console.log("what am i", dayObj);
   const spots = getSpotsById(dayObj, appointments);
   const newDay = {...dayObj, spots};
   dayObj.spots = spots;
