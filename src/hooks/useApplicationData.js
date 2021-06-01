@@ -14,14 +14,19 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
+  const isEmpty = function(obj) {
+    return Object.keys(obj).length === 0;
+  };
 
   const getSpotsById = function(dayObj, appointments) {
+    console.log(dayObj.appointments);
     let spots = 0;
     for (const id of dayObj.appointments) {
       const appointment = appointments[id];
-      if (!appointment.interview) {
+      console.log(appointment.interview);
+      if (!appointment.interview || isEmpty(appointment.interview)) {
         spots++;
-      } else if (appointment.interview) {}
+      } 
     }
     return spots;
   };
@@ -32,6 +37,7 @@ const updateSpots = function(appointmentId, days, appointments) {
   const spots = getSpotsById(dayObj, appointments);
   const newDay = {...dayObj, spots};
   dayObj.spots = spots;
+  // console.log(spots);
 
   const newDays = days.map(day => day.name === dayObj.name ? newDay : day);
 
@@ -66,22 +72,36 @@ const updateSpots = function(appointmentId, days, appointments) {
   }
 
 
-  function cancelInterview(id) {
-    updateSpots(id, state.days, state.appointments);
-    return axios.delete(`/api/appointments/${id}`)
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    const days = updateSpots(id, state.days, appointments);
+
+    // updateSpots(id, state.days, state.appointments);
+    return axios.delete(`/api/appointments/${id}`, { interview })
     .then((response) => {
       setState({
         ...state,
-      })
+        appointments,
+        days,
+      });
       return Promise.resolve();
     });
   }
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers"),
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
     ]).then((all) => {
       setState((prev) => ({
         ...prev,
